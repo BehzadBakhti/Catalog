@@ -4,20 +4,23 @@ using System.Collections.Generic;
 
 namespace CatalogApi
 {
-
-    public partial class Catalog
+    public class Catalog
     {
-        ICatalogDataProvider _dataProvider;
-        List<Product> _items = new List<Product>();
-        HashSet<string> _productTypes = new HashSet<string>();
-        bool _isInitialized = false;
+       private bool _isInitialized;
+       private ICatalogDataProvider _dataProvider;
+       private List<Product> _items = new List<Product>();
+       private HashSet<string> _productTypes = new HashSet<string>();
 
         public Catalog(ICatalogDataProvider dataProvider)
         {
             _dataProvider = dataProvider;
         }
 
-        public Result LoadCatalog()
+        /// <summary>
+        /// Initializes the Catalog by loading and storing the product list
+        /// </summary>
+        /// <returns></returns>
+        public Result Initialize()
         {
             try
             {
@@ -47,6 +50,11 @@ namespace CatalogApi
             }
         }
 
+        /// <summary>
+        /// Returns a list of all the defined product items 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public List<Product> GetAllItems()
         {
             if (!_isInitialized)
@@ -55,7 +63,12 @@ namespace CatalogApi
             return _items;
         }
 
-        public List<string> GetAllProductTypes()
+        /// <summary>
+        /// Returns all the token types that are used in the products or bundles
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public List<string> GetAllTokenTypes()
         {
             if (!_isInitialized)
                 throw new InvalidOperationException(" Catalog is not initialized ...");
@@ -63,7 +76,12 @@ namespace CatalogApi
             return _productTypes.ToList();
         }
 
-        // Sorting Methods
+        /// <summary>
+        /// Sorts and returns a list of product based on the <see cref="SortObject">SortObject</see> passed to it.
+        /// </summary>
+        /// <param name="productsToSort"></param>
+        /// <param name="sortObject"></param>
+        /// <returns></returns>
         public List<Product> Sort(List<Product> productsToSort, SortObject sortObject)
         {
             IOrderedEnumerable<Product> sortedProducts = null;
@@ -123,6 +141,12 @@ namespace CatalogApi
 
         }
 
+        /// <summary>
+        /// Filters and returns a list of product based on the <see cref="FilterObject">FilterObject</see> passed to it.
+        /// </summary>
+        /// <param name="productsToFilter"></param>
+        /// <param name="filter"></param>
+        /// <returns></returns>
         public List<Product> Filter(List<Product> productsToFilter, FilterObject filter)
         {
             return productsToFilter.Where(item =>
@@ -134,7 +158,14 @@ namespace CatalogApi
                 .ToList();
         }
 
-        public List<Product> ApplyFilterAndSort(FilterObject filterObject, SortObject sortObject)
+        /// <summary>
+        /// Filters and Sorts (Based on <see cref="FilterObject">FilterObject</see> and <see cref="SortObject">SortObject</see>) all the items defined in the Catalog, and returns a list of products.
+        /// </summary>
+        /// <param name="filterObject"></param>
+        /// <param name="sortObject"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public List<Product> FilterAndSort(FilterObject filterObject, SortObject sortObject)
         {
             if (!_isInitialized)
                 throw new InvalidOperationException(" Catalog is not initialized ...");
@@ -143,6 +174,11 @@ namespace CatalogApi
             return Sort(filtered, sortObject);
         }
 
+        /// <summary>
+        /// Returns a price range for all the products and bundles in the Cataloge as a tuple
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
         public (float minPrice, float maxPrice) GetMinMaxPrice()
         {
             if (!_isInitialized)
@@ -159,43 +195,5 @@ namespace CatalogApi
             return (minPrice, maxPrice);
         }
     }
-
-    public class FilterObject
-    {
-        public bool IsOr { get; set; }
-        public List<string> SelectedTokens { get; set; } = new List<string>();
-        public float MinPrice { get; set; } = 0;
-
-        public float MaxPrice { get; set; } = float.MaxValue;
-
-    }
-
-    public enum SortBy
-    {
-        None = -1,
-        Name = 0,
-        Price = 1,
-        TokenAmount = 2
-    }
-
-
-    public class SortObject
-    {
-        public bool Decending { get; set; } = false;
-        public SortBy SortCriteria { get; set; } = SortBy.None;
-        public List<string> SelectedTokens { get; set; } = new List<string>();
-    }
-
-    public partial class Catalog
-    {
-        public Result AddProduct(Product product)
-        {
-            var products = _dataProvider.LoadCatalogData();
-
-            return Result.Success();
-        }
-    }
-
-
 }
 

@@ -51,16 +51,15 @@ public class CatalogView : MonoBehaviour
             return;
         }
 
-        _catalog = new Catalog(new TestCatalogDataProvider());
-        var result = _catalog.LoadCatalog();
+        _catalog = new Catalog(new LocalDataProvider());
+        var result = _catalog.Initialize();
 
         if (result.IsSuccess)
         {
             var items = _catalog.GetAllItems();
-            _orderedTokenList = _catalog.GetAllProductTypes();
+            _orderedTokenList = _catalog.GetAllTokenTypes();
 
             UpdateItemsScrollView(items);
-
         }
         else
         {
@@ -150,7 +149,7 @@ public class CatalogView : MonoBehaviour
 
         };
 
-        var newItems = _catalog.ApplyFilterAndSort(filter, sortObject);
+        var newItems = _catalog.FilterAndSort(filter, sortObject);
         UpdateItemsScrollView(newItems);
     }
 
