@@ -1,0 +1,13 @@
+{
+    "displayName": "CatalogeApi",
+    "name": "com.testcompany.unity",
+    "unity": "2022.3",
+    "version": "0.0.0",
+    "description": "Catalog Api",
+    "author": "TestCompany",
+    "license": "Proprietary",
+    "type": "library",
+    "dependencies": {
+        "com.unity.nuget.newtonsoft-json": "3.0.1"
+    }
+}

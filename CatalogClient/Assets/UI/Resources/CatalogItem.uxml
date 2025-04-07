@@ -1,0 +1,9 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI/style/style.uss?fileID=7433441132597879392&amp;guid=bace2ebdc6b0f0f4caaee04c84682db9&amp;type=3#style" />
+    <ui:VisualElement style="flex-grow: 0; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); width: 220px; height: 320px; align-self: center; align-items: stretch; background-color: rgb(255, 255, 255);">
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="itemName" style="border-bottom-width: 1px; border-left-color: rgb(75, 75, 75); border-right-color: rgb(75, 75, 75); border-top-color: rgb(75, 75, 75); border-bottom-color: rgb(75, 75, 75); flex-direction: row; flex-shrink: 1; flex-grow: 1; -unity-font-style: bold;" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="description" style="flex-grow: 1; flex-shrink: 1; flex-wrap: nowrap; white-space: normal;" />
+        <ui:Button parse-escape-sequences="true" display-tooltip-when-elided="true" name="subItemsParent" class="subItemsParent" />
+        <ui:Label tabindex="-1" text="Label" parse-escape-sequences="true" display-tooltip-when-elided="true" name="price" style="-unity-font-style: bold;" />
+    </ui:VisualElement>
+</ui:UXML>

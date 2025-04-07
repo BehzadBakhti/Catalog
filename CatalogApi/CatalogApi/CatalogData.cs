@@ -6,7 +6,6 @@ namespace CatalogApi
     public class CatalogData
     {
         public List<Product> Products { get; set; } = new List<Product>();
-        public List<Bundle> Bundles { get; set; } = new List<Bundle>();
     }
 }
 

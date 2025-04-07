@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:ScrollView name="itemsParent" mode="Horizontal" vertical-scroller-visibility="Hidden" horizontal-scroller-visibility="Auto" style="flex-grow: 1; justify-content: space-around;" />
+</ui:UXML>

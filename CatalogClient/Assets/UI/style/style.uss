@@ -1,0 +1,23 @@
+.subItemsParent {
+    flex-grow: 1;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-left-color: rgb(90, 90, 90);
+    border-right-color: rgb(90, 90, 90);
+    border-top-color: rgb(90, 90, 90);
+    border-bottom-color: rgb(90, 90, 90);
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: none;
+    max-height: none;
+    justify-content: space-around;
+    align-self: center;
+    min-width: initial;
+    min-height: initial;
+    width: 200px;
+    height: 200px;
+    align-items: flex-start;
+    background-color: rgb(226, 226, 226);
+}

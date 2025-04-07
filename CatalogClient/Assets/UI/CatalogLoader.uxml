@@ -1,0 +1,28 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; flex-direction: row; background-color: rgba(0, 0, 0, 0.62); margin-top: 50px; margin-right: 50px; margin-bottom: 50px; margin-left: 50px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+        <ui:VisualElement name="Header" style="flex-grow: 0; flex-direction: column; width: 20%; align-items: stretch; min-width: 20%; max-width: 30%; justify-content: flex-start;">
+            <ui:VisualElement name="Filter" style="flex-grow: 0; align-items: stretch; background-color: rgb(182, 182, 182); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+                <ui:Label tabindex="-1" text="Filter" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
+                <ui:VisualElement style="flex-grow: 1; flex-direction: column; justify-content: space-between;">
+                    <ui:RadioButtonGroup label="Filetring pref" value="1" choices="And, Or" name="filterPref" style="flex-direction: row; overflow: hidden; opacity: 1; flex-wrap: nowrap; width: auto;" />
+                    <ui:GroupBox text="Tokens:" name="tokenList" style="flex-shrink: 1; flex-grow: 0; align-items: flex-start; justify-content: flex-start; margin-right: 2px; margin-top: 2px; margin-bottom: 2px; margin-left: 2px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; background-color: rgba(0, 0, 0, 0.13); width: auto; flex-direction: column; -unity-font-style: bold; color: rgb(0, 0, 0);" />
+                </ui:VisualElement>
+                <ui:MinMaxSlider label="Price Range" min-value="10" max-value="149" low-limit="0" high-limit="150" name="priceRange" style="min-height: 50px; align-self: auto; align-items: stretch; flex-direction: column;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="Sort" style="flex-grow: 0; background-color: rgb(182, 182, 182); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; -unity-font-style: normal; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
+                <ui:Label tabindex="-1" text="Sort" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />
+                <ui:VisualElement style="flex-grow: 1;">
+                    <ui:RadioButtonGroup label="Sorting pref" value="0" choices="Desending, Assending" name="sortPref" style="flex-direction: column;" />
+                    <ui:RadioButtonGroup label="Sort By:" value="-1" choices="Name, Price, Token Amount" name="sortBy" style="flex-direction: column;" />
+                    <ui:VisualElement style="flex-grow: 1; flex-direction: row; border-left-color: rgba(0, 0, 0, 0.38); border-right-color: rgba(0, 0, 0, 0.38); border-top-color: rgba(0, 0, 0, 0.38); border-bottom-color: rgba(0, 0, 0, 0.38); background-color: rgba(130, 130, 130, 0.37);">
+                        <ui:ListView name="tokenSortList" header-title="Tokens Sorting Order:" show-add-remove-footer="false" show-bound-collection-size="false" show-foldout-header="true" style="flex-grow: 1; flex-direction: column; -unity-font-style: bold; padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;" />
+                        <ui:Button text="Up " parse-escape-sequences="true" display-tooltip-when-elided="true" name="moveUpButton" style="width: 50px; align-self: flex-start; min-width: 50px; -unity-font-style: bold; max-width: 50px;" />
+                        <ui:Button text="Down" parse-escape-sequences="true" display-tooltip-when-elided="true" name="moveDownButton" style="width: 50px; align-self: flex-start; min-width: 50px; -unity-font-style: bold; max-width: 50px;" />
+                    </ui:VisualElement>
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:Button text="Apply" parse-escape-sequences="true" display-tooltip-when-elided="true" name="apply" style="-unity-font-style: bold;" />
+        </ui:VisualElement>
+        <ui:ScrollView name="itemsParent" mode="Horizontal" />
+    </ui:VisualElement>
+</ui:UXML>
