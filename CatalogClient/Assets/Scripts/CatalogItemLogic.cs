@@ -11,9 +11,9 @@ public class CatalogItemLogic
     private readonly Label _itemName;
     private readonly Label _description;
     private readonly Label _price;
-    private readonly Action _onClick;
+    private readonly Action<string> _onClick;
 
-    public CatalogItemLogic(VisualElement root, Product itemData, Action onclick)
+    public CatalogItemLogic(VisualElement root, Product itemData, Action<string> onclick)
     {
         _subItemTemplate = Resources.Load<VisualTreeAsset>("SubItem");
 
@@ -37,8 +37,6 @@ public class CatalogItemLogic
 
     public void AddSubItemToItem(string name, int amount)
     {
-
-
         // Instantiate the UXML template
         VisualElement newItem = _subItemTemplate.Instantiate();
 
@@ -50,19 +48,6 @@ public class CatalogItemLogic
 
     private void OnItemClicked()
     {
-        _onClick?.Invoke();
-    }
-}
-
-public class SubItemLogic
-{
-    public SubItemLogic(VisualElement root, string tokenName, int amount)
-    {
-        var tokenNameLabel = root.Q<Label>("tokenName");
-        var amountLabel = root.Q<Label>("amount");
-
-        tokenNameLabel.text = tokenName;
-        amountLabel.text = amount.ToString();
-
+        _onClick?.Invoke(_itemName.text);
     }
 }

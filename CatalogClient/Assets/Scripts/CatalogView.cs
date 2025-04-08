@@ -65,11 +65,10 @@ public class CatalogView : MonoBehaviour
         }
         else
         {
-            Debug.LogError(result.ErrorMessage);
+            Debug.LogError($"Catalog Initialization Failed, {result.ErrorMessage}");
         }
 
         InitializeFilterMenu();
-
         InitializeSortMenu();
     }
 
@@ -126,15 +125,11 @@ public class CatalogView : MonoBehaviour
                 _selectedFilterTokens.Add(changedToggle.label);
             else
                 _selectedFilterTokens.Remove(changedToggle.label);
-
         }
     }
 
     private void OnApplyClicked()
     {
-        var andOr = _filterPref.value;
-        var range = _priceRange.minValue;
-
         FilterObject filter = new FilterObject
         {
             IsOr = _filterPref.value == 1,
@@ -149,7 +144,6 @@ public class CatalogView : MonoBehaviour
             Decending = _sortPref.value == 0,
             SortCriteria = (SortBy)_sortBy.value,
             SelectedTokens = _orderedTokenList
-
         };
 
         var newItems = _catalog.FilterAndSort(filter, sortObject);
@@ -168,9 +162,9 @@ public class CatalogView : MonoBehaviour
         {
             (_orderedTokenList[selectedIndex], _orderedTokenList[selectedIndex - 1]) = (_orderedTokenList[selectedIndex - 1], _orderedTokenList[selectedIndex]);
             selectedIndex--;
-            _tokenSortList.RefreshItems(); // Refresh the visual list
-            _tokenSortList.ScrollToItem(selectedIndex); // Keep the moved item in view (optional)
-            _tokenSortList.selectedIndex = selectedIndex; // Maintain selection
+            _tokenSortList.RefreshItems(); 
+            _tokenSortList.ScrollToItem(selectedIndex); 
+            _tokenSortList.selectedIndex = selectedIndex;
             UpdateMoveButtonsState();
         }
     }
@@ -181,9 +175,9 @@ public class CatalogView : MonoBehaviour
         {
             (_orderedTokenList[selectedIndex], _orderedTokenList[selectedIndex + 1]) = (_orderedTokenList[selectedIndex + 1], _orderedTokenList[selectedIndex]);
             selectedIndex++;
-            _tokenSortList.RefreshItems(); // Refresh the visual list
-            _tokenSortList.ScrollToItem(selectedIndex); // Keep the moved item in view (optional)
-            _tokenSortList.selectedIndex = selectedIndex; // Maintain selection
+            _tokenSortList.RefreshItems();
+            _tokenSortList.ScrollToItem(selectedIndex);
+            _tokenSortList.selectedIndex = selectedIndex;
             UpdateMoveButtonsState();
         }
     }
@@ -203,10 +197,10 @@ public class CatalogView : MonoBehaviour
         }
     }
 
-    private void OnItemClicked()
+    // For demonestration only
+    private void OnItemClicked(string itemName)
     {
-
+        Debug.Log($"Item clicked: {itemName}");
     }
-
 }
 
