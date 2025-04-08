@@ -4,14 +4,19 @@ using System.Collections.Generic;
 
 namespace CatalogApi
 {
+    // Catalog can potentially have Data modification Api too, but 
     public class Catalog
     {
-       private bool _isInitialized;
-       private ICatalogDataProvider _dataProvider;
-       private List<Product> _items = new List<Product>();
-       private HashSet<string> _productTypes = new HashSet<string>();
+        private bool _isInitialized;
+        private ICatalogDataProvider _dataProvider;
+        private List<Product> _items = new List<Product>();
+        private HashSet<string> _productTypes = new HashSet<string>();
 
-        public Catalog(ICatalogDataProvider dataProvider)
+        // No functionality added for this, only for demonstration purpuse
+        // This is where we can notify subscribers to catalog events if required ...
+        public event Action SomeEvent;
+
+        public Catalog(ICatalogDataProvider dataProvider )
         {
             _dataProvider = dataProvider;
         }
@@ -152,10 +157,9 @@ namespace CatalogApi
             return productsToFilter.Where(item =>
                 (filter.MinPrice <= item.Price && item.Price <= filter.MaxPrice) &&
                 (!filter.OnlyBundles || item.IsBundle) && // Apply bundle filter
-                (!filter.SelectedTokens.Any() || // No tokens to filter by
-                 (filter.IsOr
-                 ? filter.SelectedTokens.Any(token => item.Tokens.ContainsKey(token))
-                 : filter.SelectedTokens.All(token => item.Tokens.ContainsKey(token)))))
+                (!filter.SelectedTokens.Any() || (filter.IsOr
+                     ? filter.SelectedTokens.Any(token => item.Tokens.ContainsKey(token))
+                     : filter.SelectedTokens.All(token => item.Tokens.ContainsKey(token)))))
                 .ToList();
         }
 
@@ -171,7 +175,20 @@ namespace CatalogApi
             if (!_isInitialized)
                 throw new InvalidOperationException(" Catalog is not initialized ...");
 
-            var filtered = Filter(_items, filterObject);
+            return FilterAndSort(_items, filterObject, sortObject);
+        }
+
+        /// <summary>
+        /// Filters and Sorts (Based on <see cref="FilterObject">FilterObject</see> and <see cref="SortObject">SortObject</see>) and returns a list of Products.
+        /// </summary>
+        /// <param name="productsToFilterAndSort"></param>
+        /// <param name="filterObject"></param>
+        /// <param name="sortObject"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException"></exception>
+        public List<Product> FilterAndSort(List<Product> productsToFilterAndSort, FilterObject filterObject, SortObject sortObject)
+        {
+            var filtered = Filter(productsToFilterAndSort, filterObject);
             return Sort(filtered, sortObject);
         }
 
@@ -186,10 +203,8 @@ namespace CatalogApi
                 throw new InvalidOperationException(" Catalog is not initialized ...");
 
             if (!_items.Any())
-            {
                 return (float.MaxValue, float.MinValue); // Return defaults for an empty or null list
-            }
-
+           
             float minPrice = _items.Min(p => p.Price);
             float maxPrice = _items.Max(p => p.Price);
 

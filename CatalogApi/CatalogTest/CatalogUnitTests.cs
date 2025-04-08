@@ -37,7 +37,6 @@ namespace CatalogTest
             Assert.True(result.IsSuccess);
 
             var filter = new FilterObject { OnlyBundles = true };
-
             var filteredProducts = catalog.Filter(catalog.GetAllItems(), filter);
             Assert.All(filteredProducts, p => Assert.True(p.IsBundle));
             Assert.Equal(6, filteredProducts.Count);
