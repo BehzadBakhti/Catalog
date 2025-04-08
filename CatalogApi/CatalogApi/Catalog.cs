@@ -151,6 +151,7 @@ namespace CatalogApi
         {
             return productsToFilter.Where(item =>
                 (filter.MinPrice <= item.Price && item.Price <= filter.MaxPrice) &&
+                (!filter.OnlyBundles || item.IsBundle) && // Apply bundle filter
                 (!filter.SelectedTokens.Any() || // No tokens to filter by
                  (filter.IsOr
                  ? filter.SelectedTokens.Any(token => item.Tokens.ContainsKey(token))

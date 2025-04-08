@@ -16,6 +16,7 @@ public class CatalogView : MonoBehaviour
     private RadioButtonGroup _filterPref;
     private GroupBox _tokenFilterList;
     private HashSet<string> _selectedFilterTokens = new HashSet<string>();
+    private Toggle _selectOnlyBundles;
 
     // Sort
     private ListView _tokenSortList;
@@ -36,6 +37,7 @@ public class CatalogView : MonoBehaviour
         _tokenSortList = root.Q<ListView>("tokenSortList");
         _tokenFilterList = root.Q<GroupBox>("tokenList");
         _priceRange = root.Q<MinMaxSlider>("priceRange");
+        _selectOnlyBundles = root.Q<Toggle>("onlyBundles");
 
         _sortPref = root.Q<RadioButtonGroup>("sortPref");
         _sortBy = root.Q<RadioButtonGroup>("sortBy");
@@ -138,7 +140,8 @@ public class CatalogView : MonoBehaviour
             IsOr = _filterPref.value == 1,
             MinPrice = _priceRange.minValue,
             MaxPrice = _priceRange.maxValue,
-            SelectedTokens = _selectedFilterTokens.ToList()
+            SelectedTokens = _selectedFilterTokens.ToList(),
+            OnlyBundles =_selectOnlyBundles.value           
         };
 
         SortObject sortObject = new SortObject

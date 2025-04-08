@@ -30,6 +30,20 @@ namespace CatalogTest
         }
 
         [Fact]
+        public void Filter_OnlyBundles()
+        {
+            var catalog = new Catalog(new TestCatalogDataProvider());
+            var result = catalog.Initialize();
+            Assert.True(result.IsSuccess);
+
+            var filter = new FilterObject { OnlyBundles = true };
+
+            var filteredProducts = catalog.Filter(catalog.GetAllItems(), filter);
+            Assert.All(filteredProducts, p => Assert.True(p.IsBundle));
+            Assert.Equal(6, filteredProducts.Count);
+        }
+
+        [Fact]
         public void Filter_BySingleToken_IsOr()
         {
             var catalog = new Catalog(new TestCatalogDataProvider());
@@ -38,7 +52,7 @@ namespace CatalogTest
 
             var filter = new FilterObject { IsOr = true, SelectedTokens = new List<string> { "Gems" } };
             var filteredProducts = catalog.Filter(catalog.GetAllItems(), filter);
-            Assert.Equal(7, filteredProducts.Count); 
+            Assert.Equal(7, filteredProducts.Count);
             Assert.All(filteredProducts, p => p.Tokens.ContainsKey("Gems"));
         }
 
@@ -65,7 +79,7 @@ namespace CatalogTest
 
             var filter = new FilterObject { IsOr = false, SelectedTokens = new List<string> { "Coins", "Gems" } };
             var filteredProducts = catalog.Filter(catalog.GetAllItems(), filter);
-            Assert.Equal(4, filteredProducts.Count); 
+            Assert.Equal(4, filteredProducts.Count);
             Assert.All(filteredProducts, p => Assert.True(p.Tokens.ContainsKey("Coins") && p.Tokens.ContainsKey("Gems")));
         }
 
@@ -86,7 +100,7 @@ namespace CatalogTest
         [Fact]
         public void Sort_ByName_Descending()
         {
-            var catalog = new Catalog(new TestCatalogDataProvider()); 
+            var catalog = new Catalog(new TestCatalogDataProvider());
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
@@ -154,7 +168,7 @@ namespace CatalogTest
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
-            var sortObject = new SortObject { SortCriteria = SortBy.TokenAmount, Decending = true, SelectedTokens = new List<string> {"Tickets", "Gems", "Coins"} };
+            var sortObject = new SortObject { SortCriteria = SortBy.TokenAmount, Decending = true, SelectedTokens = new List<string> { "Tickets", "Gems", "Coins" } };
             var sortedProducts = catalog.Sort(catalog.GetAllItems(), sortObject);
 
             // Expect sorting primarily by number of Tickets, then Gems and finally Coins

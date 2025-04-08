@@ -8,6 +8,7 @@
                     <ui:GroupBox text="Tokens:" name="tokenList" style="flex-shrink: 1; flex-grow: 0; align-items: flex-start; justify-content: flex-start; margin-right: 2px; margin-top: 2px; margin-bottom: 2px; margin-left: 2px; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px; background-color: rgba(0, 0, 0, 0.13); width: auto; flex-direction: column; -unity-font-style: bold; color: rgb(0, 0, 0);" />
                 </ui:VisualElement>
                 <ui:MinMaxSlider label="Price Range" min-value="10" max-value="149" low-limit="0" high-limit="150" name="priceRange" style="min-height: 50px; align-self: auto; align-items: stretch; flex-direction: column;" />
+                <ui:Toggle label="Show only Bundles" name="onlyBundles" />
             </ui:VisualElement>
             <ui:VisualElement name="Sort" style="flex-grow: 0; background-color: rgb(182, 182, 182); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; -unity-font-style: normal; padding-top: 10px; padding-right: 10px; padding-bottom: 10px; padding-left: 10px;">
                 <ui:Label tabindex="-1" text="Sort" parse-escape-sequences="true" display-tooltip-when-elided="true" style="-unity-font-style: bold;" />

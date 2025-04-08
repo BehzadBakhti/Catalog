@@ -11,7 +11,7 @@ namespace CatalogApi
         public float Price { get; set; }
 
         public Dictionary<string, int> Tokens { get; set; } = new Dictionary<string, int>(3);
-        public bool IsBundle => Tokens.Count > 0;
+        public bool IsBundle => Tokens.Count > 1;
 
     }
 }
