@@ -7,7 +7,5 @@
         Price = 1,
         TokenAmount = 2
     }
-
-
 }
 

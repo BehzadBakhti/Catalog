@@ -1,9 +1,11 @@
 ﻿using CatalogApi;
 using Newtonsoft.Json;
 
+namespace CatalogTest;
+
 public class TestCatalogDataProvider : ICatalogDataProvider
 {
-    private string TestData = @"
+    private readonly string _testData = @"
                          {
                           ""Products"": [
                             {
@@ -125,19 +127,16 @@ public class TestCatalogDataProvider : ICatalogDataProvider
     public Result AddProduct(string name, string description, Dictionary<string, int> products, float price)
     {
 
-        var Data = JsonConvert.DeserializeObject<CatalogData>(TestData);
+        var data = JsonConvert.DeserializeObject<CatalogData>(_testData);
 
-        Data ??= new CatalogData();
+        data ??= new CatalogData();
 
-        if (Data.Products.Any(p => p.Name == name))
+        if (data.Products.Any(p => p.Name == name))
             return Result.Failure($"A Bundle with name: {name} already Exists");
 
-        Data.Products.Add(new Product()
+        data.Products.Add(new Product(name, description, price)
         {
-            Name = name,
             Tokens = products,
-            Description = description,
-            Price = price
         });
 
         return Result.Success();
@@ -148,11 +147,11 @@ public class TestCatalogDataProvider : ICatalogDataProvider
     {
         try
         {
-            var Data = JsonConvert.DeserializeObject<CatalogData>(TestData);
+            var data = JsonConvert.DeserializeObject<CatalogData>(_testData);
 
-            Data ??= new CatalogData();
+            data ??= new CatalogData();
 
-            return Result<CatalogData>.Success(Data);
+            return Result<CatalogData>.Success(data);
         }
         catch (Exception ex)
         {

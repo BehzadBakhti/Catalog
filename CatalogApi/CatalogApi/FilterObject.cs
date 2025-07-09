@@ -3,13 +3,13 @@
 namespace CatalogApi
 {
     /// <summary>
-    /// Data object contaning required information for filtering the Catalog Products
+    /// Data object containing required information for filtering the Catalog Products
     /// </summary>
     public class FilterObject
     {
         /// <summary>
         /// A flag for setting the type of combination wile filtering based on Tokens, 
-        /// if 'true', filtering will Chain tokens availibility with 'OR', otherwise, 'AND' 
+        /// if 'true', filtering will Chain tokens availability with 'OR', otherwise, 'AND' 
         /// </summary>
         public bool IsOr { get; set; }
         public float MinPrice { get; set; } = 0;

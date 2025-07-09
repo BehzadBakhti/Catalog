@@ -141,7 +141,7 @@ public class CatalogView : MonoBehaviour
 
         SortObject sortObject = new SortObject
         {
-            Decending = _sortPref.value == 0,
+            Descending = _sortPref.value == 0,
             SortCriteria = (SortBy)_sortBy.value,
             SelectedTokens = _orderedTokenList
         };

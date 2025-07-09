@@ -16,7 +16,7 @@ namespace CatalogApi
         // This is where we can notify subscribers to catalog events if required ...
         public event Action SomeEvent;
 
-        public Catalog(ICatalogDataProvider dataProvider )
+        public Catalog(ICatalogDataProvider dataProvider)
         {
             _dataProvider = dataProvider;
         }
@@ -96,36 +96,34 @@ namespace CatalogApi
                 case SortBy.None:
                     return productsToSort;
                 case SortBy.Name:
-                    sortedProducts = sortObject.Decending
+                    sortedProducts = sortObject.Descending
                         ? productsToSort.OrderByDescending(p => p.Name)
                         : productsToSort.OrderBy(p => p.Name);
                     break;
                 case SortBy.Price:
-                    sortedProducts = sortObject.Decending
+                    sortedProducts = sortObject.Descending
                         ? productsToSort.OrderByDescending(p => p.Price)
                         : productsToSort.OrderBy(p => p.Price);
                     break;
                 case SortBy.TokenAmount: // order of SelectedTokens is important
                     if (sortObject.SelectedTokens.Any())
                     {
-                        IOrderedEnumerable<Product>? initialSort = null;
-
-                        for (int i = 0; i < sortObject.SelectedTokens.Count; i++)
+                        for (var i = 0; i < sortObject.SelectedTokens.Count; i++)
                         {
-                            string currentToken = sortObject.SelectedTokens[i];
+                            var currentToken = sortObject.SelectedTokens[i];
 
                             if (i == 0)
                             {
-                                initialSort = sortObject.Decending
-                                    ? productsToSort.OrderByDescending(p => p.Tokens.ContainsKey(currentToken) ? p.Tokens[currentToken] : int.MinValue)
-                                    : productsToSort.OrderBy(p => p.Tokens.ContainsKey(currentToken) ? p.Tokens[currentToken] : int.MinValue);
+                                var initialSort = sortObject.Descending
+                                    ? productsToSort.OrderByDescending(p => p.Tokens.GetValueOrDefault(currentToken, int.MinValue))
+                                    : productsToSort.OrderBy(p => p.Tokens.GetValueOrDefault(currentToken, int.MinValue));
                                 sortedProducts = initialSort; // Assign to sortedProducts for subsequent ThenBy
                             }
                             else if (sortedProducts != null)
                             {
-                                sortedProducts = sortObject.Decending
-                                    ? sortedProducts.ThenByDescending(p => p.Tokens.ContainsKey(currentToken) ? p.Tokens[currentToken] : int.MinValue)
-                                    : sortedProducts.ThenBy(p => p.Tokens.ContainsKey(currentToken) ? p.Tokens[currentToken] : int.MinValue);
+                                sortedProducts = sortObject.Descending
+                                    ? sortedProducts.ThenByDescending(p => p.Tokens.GetValueOrDefault(currentToken, int.MinValue))
+                                    : sortedProducts.ThenBy(p => p.Tokens.GetValueOrDefault(currentToken, int.MinValue));
                             }
                         }
 
@@ -143,7 +141,6 @@ namespace CatalogApi
             }
 
             return sortedProducts?.ToList() ?? productsToSort; // Return sorted list or original if no sorting
-
         }
 
         /// <summary>
@@ -193,7 +190,7 @@ namespace CatalogApi
         }
 
         /// <summary>
-        /// Returns a price range for all the products and bundles in the Cataloge as a tuple
+        /// Returns a price range for all the products and bundles in the Catalog as a tuple
         /// </summary>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
@@ -203,10 +200,10 @@ namespace CatalogApi
                 throw new InvalidOperationException(" Catalog is not initialized ...");
 
             if (!_items.Any())
-                return (float.MaxValue, float.MinValue); // Return defaults for an empty or null list
-           
-            float minPrice = _items.Min(p => p.Price);
-            float maxPrice = _items.Max(p => p.Price);
+                return (0.0f, float.MinValue); // Return defaults for an empty or null list
+
+            var minPrice = _items.Min(p => p.Price);
+            var maxPrice = _items.Max(p => p.Price);
 
             return (minPrice, maxPrice);
         }

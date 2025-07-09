@@ -7,7 +7,7 @@ namespace CatalogApi
     /// </summary>
     public class SortObject
     {
-        public bool Decending { get; set; } = false;
+        public bool Descending { get; set; } = false;
         public SortBy SortCriteria { get; set; } = SortBy.None;
         /// <summary>
         /// Ordered List of token that is used for sorting the products. 

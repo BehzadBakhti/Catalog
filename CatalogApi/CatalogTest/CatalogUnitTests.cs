@@ -49,7 +49,7 @@ namespace CatalogTest
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
-            var filter = new FilterObject { IsOr = true, SelectedTokens = new List<string> { "Gems" } };
+            var filter = new FilterObject { IsOr = true, SelectedTokens = ["Gems"] };
             var filteredProducts = catalog.Filter(catalog.GetAllItems(), filter);
             Assert.Equal(7, filteredProducts.Count);
             Assert.All(filteredProducts, p => p.Tokens.ContainsKey("Gems"));
@@ -62,7 +62,7 @@ namespace CatalogTest
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
-            var filter = new FilterObject { IsOr = true, SelectedTokens = new List<string> { "Coins", "Tickets" } };
+            var filter = new FilterObject { IsOr = true, SelectedTokens = ["Coins", "Tickets"] };
             var filteredProducts = catalog.Filter(catalog.GetAllItems(), filter);
             Assert.Equal(11, filteredProducts.Count);
             Assert.All(filteredProducts, p => Assert.True(p.Tokens.ContainsKey("Coins") || p.Tokens.ContainsKey("Tickets")));
@@ -76,7 +76,7 @@ namespace CatalogTest
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
-            var filter = new FilterObject { IsOr = false, SelectedTokens = new List<string> { "Coins", "Gems" } };
+            var filter = new FilterObject { IsOr = false, SelectedTokens = ["Coins", "Gems"] };
             var filteredProducts = catalog.Filter(catalog.GetAllItems(), filter);
             Assert.Equal(4, filteredProducts.Count);
             Assert.All(filteredProducts, p => Assert.True(p.Tokens.ContainsKey("Coins") && p.Tokens.ContainsKey("Gems")));
@@ -89,7 +89,7 @@ namespace CatalogTest
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
-            var sortObject = new SortObject { SortCriteria = SortBy.Name, Decending = false };
+            var sortObject = new SortObject { SortCriteria = SortBy.Name, Descending = false };
             var sortedProducts = catalog.Sort(catalog.GetAllItems(), sortObject);
             Assert.Equal("Bag of Gems", sortedProducts.First().Name);
             Assert.Equal("Small Coin Pouch", sortedProducts[9].Name);
@@ -103,7 +103,7 @@ namespace CatalogTest
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
-            var sortObject = new SortObject { SortCriteria = SortBy.Name, Decending = true };
+            var sortObject = new SortObject { SortCriteria = SortBy.Name, Descending = true };
             var sortedProducts = catalog.Sort(catalog.GetAllItems(), sortObject);
             Assert.Equal("Ultimate Starter Pack", sortedProducts.First().Name);
             Assert.Equal("Sparkling Gemstone", sortedProducts[2].Name);
@@ -117,7 +117,7 @@ namespace CatalogTest
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
-            var sortObject = new SortObject { SortCriteria = SortBy.Price, Decending = false };
+            var sortObject = new SortObject { SortCriteria = SortBy.Price, Descending = false };
             var sortedProducts = catalog.Sort(catalog.GetAllItems(), sortObject);
             Assert.Equal("Single Game Ticket", sortedProducts.First().Name);
             Assert.Equal("Jackpot Bundle", sortedProducts.Last().Name);
@@ -130,7 +130,7 @@ namespace CatalogTest
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
-            var sortObject = new SortObject { SortCriteria = SortBy.Price, Decending = true };
+            var sortObject = new SortObject { SortCriteria = SortBy.Price, Descending = true };
             var sortedProducts = catalog.Sort(catalog.GetAllItems(), sortObject);
             Assert.Equal("Jackpot Bundle", sortedProducts.First().Name);
             Assert.Equal("Single Game Ticket", sortedProducts.Last().Name);
@@ -143,7 +143,7 @@ namespace CatalogTest
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
-            var sortObject = new SortObject { SortCriteria = SortBy.TokenAmount, Decending = false, SelectedTokens = new List<string> { "Coins" } };
+            var sortObject = new SortObject { SortCriteria = SortBy.TokenAmount, Descending = false, SelectedTokens = ["Coins"] };
             var sortedProducts = catalog.Sort(catalog.GetAllItems(), sortObject);
             Assert.Equal("Jackpot Bundle", sortedProducts.Last().Name);     // Coins: 500
         }
@@ -155,7 +155,7 @@ namespace CatalogTest
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
-            var sortObject = new SortObject { SortCriteria = SortBy.TokenAmount, Decending = true, SelectedTokens = new List<string> { "Gems" } };
+            var sortObject = new SortObject { SortCriteria = SortBy.TokenAmount, Descending = true, SelectedTokens = ["Gems"] };
             var sortedProducts = catalog.Sort(catalog.GetAllItems(), sortObject);
             Assert.Equal("Jackpot Bundle", sortedProducts.First().Name);    // Gems: 25
         }
@@ -167,7 +167,7 @@ namespace CatalogTest
             var result = catalog.Initialize();
             Assert.True(result.IsSuccess);
 
-            var sortObject = new SortObject { SortCriteria = SortBy.TokenAmount, Decending = true, SelectedTokens = new List<string> { "Tickets", "Gems", "Coins" } };
+            var sortObject = new SortObject { SortCriteria = SortBy.TokenAmount, Descending = true, SelectedTokens = ["Tickets", "Gems", "Coins"] };
             var sortedProducts = catalog.Sort(catalog.GetAllItems(), sortObject);
 
             // Expect sorting primarily by number of Tickets, then Gems and finally Coins
