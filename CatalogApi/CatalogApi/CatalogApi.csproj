@@ -9,6 +9,11 @@
 	<ItemGroup>
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="**/*.meta" Visible="false" />
+	</ItemGroup>
+
 	<PropertyGroup>
 		<IntermediateOutputPath>.obj/$(Configuration)</IntermediateOutputPath>
 		<OutputPath>.bin/$(Configuration)</OutputPath>
