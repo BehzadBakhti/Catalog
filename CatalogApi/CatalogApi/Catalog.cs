@@ -27,6 +27,8 @@ namespace CatalogApi
         /// <returns></returns>
         public Result Initialize()
         {
+            _isInitialized = false;
+            _items.Clear();
             try
             {
                 var catalogDataResult = _dataProvider.LoadCatalogData();
@@ -60,7 +62,7 @@ namespace CatalogApi
         /// </summary>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public List<Product> GetAllItems()
+        public IReadOnlyList<Product> GetAllItems()
         {
             if (!_isInitialized)
                 throw new InvalidOperationException(" Catalog is not initialized ...");
@@ -73,7 +75,7 @@ namespace CatalogApi
         /// </summary>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public List<string> GetAllTokenTypes()
+        public IReadOnlyList<string> GetAllTokenTypes()
         {
             if (!_isInitialized)
                 throw new InvalidOperationException(" Catalog is not initialized ...");
@@ -87,7 +89,7 @@ namespace CatalogApi
         /// <param name="productsToSort"></param>
         /// <param name="sortObject"></param>
         /// <returns></returns>
-        public List<Product> Sort(List<Product> productsToSort, SortObject sortObject)
+        public IReadOnlyList<Product> Sort(IReadOnlyList<Product> productsToSort, SortObject sortObject)
         {
             IOrderedEnumerable<Product> sortedProducts = null;
 
@@ -149,7 +151,7 @@ namespace CatalogApi
         /// <param name="productsToFilter"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public List<Product> Filter(List<Product> productsToFilter, FilterObject filter)
+        public IReadOnlyList<Product> Filter(IReadOnlyList<Product> productsToFilter, FilterObject filter)
         {
             return productsToFilter.Where(item =>
                 (filter.MinPrice <= item.Price && item.Price <= filter.MaxPrice) &&
@@ -167,7 +169,7 @@ namespace CatalogApi
         /// <param name="sortObject"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public List<Product> FilterAndSort(FilterObject filterObject, SortObject sortObject)
+        public IReadOnlyList<Product> FilterAndSort(FilterObject filterObject, SortObject sortObject)
         {
             if (!_isInitialized)
                 throw new InvalidOperationException(" Catalog is not initialized ...");
@@ -183,7 +185,7 @@ namespace CatalogApi
         /// <param name="sortObject"></param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException"></exception>
-        public List<Product> FilterAndSort(List<Product> productsToFilterAndSort, FilterObject filterObject, SortObject sortObject)
+        public IReadOnlyList<Product> FilterAndSort(IReadOnlyList<Product> productsToFilterAndSort, FilterObject filterObject, SortObject sortObject)
         {
             var filtered = Filter(productsToFilterAndSort, filterObject);
             return Sort(filtered, sortObject);

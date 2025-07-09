@@ -59,7 +59,7 @@ public class CatalogView : MonoBehaviour
         if (result.IsSuccess)
         {
             var items = _catalog.GetAllItems();
-            _orderedTokenList = _catalog.GetAllTokenTypes();
+            _orderedTokenList = _catalog.GetAllTokenTypes().ToList();
 
             UpdateItemsScrollView(items);
         }
@@ -182,7 +182,7 @@ public class CatalogView : MonoBehaviour
         }
     }
 
-    public void UpdateItemsScrollView(List<Product> items)
+    public void UpdateItemsScrollView(IReadOnlyList<Product> items)
     {
         _scrollView.Clear();
         foreach (var item in items)
